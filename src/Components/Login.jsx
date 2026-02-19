@@ -11,6 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState('Harsh@kulbe.com');
   const [password, setPassword] = useState('H_kulbe123');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
 
   const handleLogin = async() => {
     try {
@@ -22,7 +23,7 @@ const Login = () => {
      dispatch(addUser(res.data));
       navigate('/feed');
     }catch(err){
-      console.error(err);
+      setError(err?.response?.data|| 'Something went wrong.');
     }
   }
 
@@ -65,7 +66,7 @@ const Login = () => {
               {showPassword ? "🙈" : "👁️"}
             </button>
           </div>
-
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           <button 
             className="btn btn-primary w-full mt-6 transition-all duration-300 hover:scale-105"
             onClick={handleLogin}
