@@ -30,7 +30,7 @@ const NavBar = () => {
     <Link to={"/feed"} className="btn btn-ghost text-xl">DevTender </Link>
   </div>
   {user && (<div className="flex gap-2">
-    <div className="dropdown dropdown-end">Welcome, {user.firstName}!
+    <div className="dropdown dropdown-end">Welcome,  {user.firstName} !
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-5">
         <div className="w-10 rounded-full">
           <img
