@@ -20,160 +20,149 @@ const EditProfile = ({ user }) => {
   const saveProfile = async () => {
     setError("");
 
-
-
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
-        {
-          firstName,
-          lastName,
-          photoUrl,
-          age,
-          gender,
-          about,
-        },
+        { firstName, lastName, photoUrl, age, gender, about },
         { withCredentials: true }
       );
 
       dispatch(addUser(res?.data?.data));
-
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
-
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
     }
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex flex-col items-center py-10">
+    <div className="min-h-screen flex justify-center py-16 px-6">
 
-      <div className="flex flex-col lg:flex-row gap-12 items-start">
+      <div className="flex flex-col lg:flex-row gap-16 max-w-6xl w-full">
 
-        {/* ===== Edit Form ===== */}
-        <div className="card w-96 bg-base-100 shadow-2xl rounded-2xl">
-          <div className="card-body">
-            <h2 className="card-title justify-center text-2xl font-bold mb-2">
-              Edit Profile ✨
-            </h2>
+        {/* ===== Glass Form Card ===== */}
+        <div className="w-96 backdrop-blur-md bg-slate-800/40 border border-white/5 rounded-2xl shadow-lg shadow-black/30 p-8 transition duration-300 hover:bg-slate-800/50">
+
+          <h2 className="text-2xl font-bold text-center mb-8 text-white">
+            Edit Profile ✨
+          </h2>
+
+          <div className="space-y-5">
 
             {/* First Name */}
-            <div className="form-control my-2">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">First Name</span>
+                <span className="label-text text-gray-400">First Name</span>
               </label>
               <input
                 type="text"
                 value={firstName}
-                className="input input-bordered focus:input-primary"
                 onChange={(e) => setFirstName(e.target.value)}
+                className="input bg-slate-800/40 border border-white/5 focus:border-pink-500 focus:ring-0 focus:outline-none text-white rounded-xl"
               />
             </div>
 
             {/* Last Name */}
-            <div className="form-control my-2">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Last Name</span>
+                <span className="label-text text-gray-400">Last Name</span>
               </label>
               <input
                 type="text"
                 value={lastName}
-                className="input input-bordered focus:input-primary"
                 onChange={(e) => setLastName(e.target.value)}
+                className="input bg-slate-800/40 border border-white/5 focus:border-pink-500 focus:ring-0 focus:outline-none text-white rounded-xl"
               />
             </div>
 
             {/* Photo URL */}
-            <div className="form-control my-2">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Photo URL</span>
+                <span className="label-text text-gray-400">Photo URL</span>
               </label>
               <input
                 type="text"
                 value={photoUrl}
-                className="input input-bordered focus:input-primary"
                 onChange={(e) => setPhotoUrl(e.target.value)}
+                className="input bg-slate-800/40 border border-white/5 focus:border-pink-500 focus:ring-0 focus:outline-none text-white rounded-xl"
               />
             </div>
 
             {/* Age */}
-            <div className="form-control my-2">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Age</span>
+                <span className="label-text text-gray-400">Age</span>
               </label>
               <input
                 type="number"
                 value={age}
-                className="input input-bordered focus:input-primary"
                 onChange={(e) => setAge(e.target.value)}
+                className="input bg-slate-800/40 border border-white/5 focus:border-pink-500 focus:ring-0 focus:outline-none text-white rounded-xl"
               />
             </div>
 
-            {/* Gender Dropdown */}
-            <div className="form-control my-2">
+            {/* Gender */}
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Gender</span>
+                <span className="label-text text-gray-400">Gender</span>
               </label>
               <select
                 value={gender}
-                className="select select-bordered focus:select-primary"
                 onChange={(e) => setGender(e.target.value)}
+                className="select bg-slate-800/40 border border-white/5 focus:border-pink-500 focus:ring-0 focus:outline-none text-white rounded-xl"
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option> 
-                <option value="confused">Confused</option>
+                <option value="male" className="bg-slate-900">Male</option>
+                <option value="female" className="bg-slate-900">Female</option>
+                <option value="confused" className="bg-slate-900">Confused</option>
               </select>
             </div>
 
             {/* About */}
-            <div className="form-control my-2">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">About</span>
+                <span className="label-text text-gray-400">About</span>
               </label>
               <textarea
-                value={about}
                 rows="3"
-                className="textarea textarea-bordered focus:textarea-primary"
+                value={about}
                 onChange={(e) => setAbout(e.target.value)}
+                className="textarea bg-slate-800/40 border border-white/5 focus:border-pink-500 focus:ring-0 focus:outline-none text-white rounded-xl"
               />
             </div>
 
-            {/* Error Message */}
+            {/* Error */}
             {error && (
-              <p className="text-error text-sm text-center mt-2">{error}</p>
+              <div className="alert bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl">
+                <span>{error}</span>
+              </div>
             )}
 
             {/* Save Button */}
-            <div className="card-actions justify-center mt-4">
-              <button
-                className="btn btn-primary px-10 rounded-full hover:scale-105 transition-all duration-200"
-                onClick={saveProfile}
-              >
-                Save Profile 💾
-              </button>
-            </div>
+            <button
+              onClick={saveProfile}
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:scale-105 transition-all duration-300 shadow-md"
+            >
+              Save Profile 💾
+            </button>
+
           </div>
         </div>
 
-        {/* ===== Live Preview ===== */}
-        <div className="mt-5 lg:mt-0">
-          <UserCard
-            user={{ firstName, lastName, photoUrl, age, gender, about }}
-          />
-        </div>
+        {/* ===== Live Card ===== */}
+        <UserCard
+          user={{ firstName, lastName, photoUrl, age, gender, about }}
+        />
 
       </div>
 
-      {/* ===== Toast ===== */}
+      {/* Toast */}
       {showToast && (
-        <div className="toast toast-top toast-center">
-          <div className="alert alert-success shadow-lg">
+        <div className="toast toast-top toast-end">
+          <div className="alert bg-green-500/10 border border-green-500/30 text-green-400">
             <span>Profile saved successfully 🎉</span>
           </div>
         </div>
       )}
-
     </div>
   );
 };

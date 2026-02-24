@@ -8,7 +8,7 @@ const appStore = configureStore({
   reducer: {
     user : userReducer,
     feed : feedReducer,
-    Connections : connectionReducer,
+    connections : connectionReducer,
     requests : requestReducer,
   },
 });

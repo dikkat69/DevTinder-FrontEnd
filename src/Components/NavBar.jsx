@@ -1,59 +1,108 @@
-import { useSelector , useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
-   const navigate = useNavigate();
-   const dispatch = useDispatch();
-
-
-  const handleLogout = async() => {
-   
-    try{
-      await axios.post(BASE_URL+'/logout',{} ,{withCredentials: true});
+  const handleLogout = async () => {
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
       dispatch(removeUser());
-      return navigate('/login');
-    }catch(err){
+      navigate("/login");
+    } catch (err) {
       console.error(err);
     }
-
   };
 
-  const user = useSelector((state) => state.user);
-    return(
-        <div className="navbar bg-base-300 shadow-sm">
-  <div className="flex-1">
-    <Link to={"/feed"} className="btn btn-ghost text-xl">DevTender </Link>
-  </div>
-  {user && (<div className="flex gap-2">
-    <div className="dropdown dropdown-end">Welcome,  {user.firstName} !
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-5">
-        <div className="w-10 rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src={user?.photoUrl} />
-        </div>
+  return (
+    <div className="navbar px-8 py-4 backdrop-blur-xl bg-white/5 border-b border-white/10">
+
+      {/* Left - Logo */}
+      <div className="flex-1">
+        <Link
+          to="/feed"
+          className="text-2xl font-bold tracking-wide text-white hover:text-pink-400 transition"
+        >
+          DevTinder
+        </Link>
       </div>
-      <ul
-        tabIndex="-1"
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li>
-          <Link to={"/profile"} className="justify-between">
-            Profile
-            <span className="badge">Edit</span>
-          </Link>
-        </li>
-        <li><Link to={"/connections"}>Connections</Link></li>
-        <li><Link to={"/requests"}>Requests</Link></li>
-        <li><a onClick={handleLogout}>Logout</a></li>
-      </ul>
+
+      {/* Right - User Section */}
+      {user && (
+        <div className="flex items-center gap-6">
+
+          <span className="hidden sm:block text-gray-300">
+            Welcome, <span className="text-white font-semibold">{user.firstName}</span>
+          </span>
+
+          <div className="dropdown dropdown-end">
+
+            {/* Avatar Button */}
+            <label
+              tabIndex={0}
+              className="btn btn-ghost btn-circle avatar border border-white/20 hover:border-pink-500/40 transition"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  src={user?.photoUrl}
+                  alt="avatar"
+                  className="object-cover"
+                />
+              </div>
+            </label>
+
+            {/* Dropdown Menu */}
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 w-44 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl p-2 space-y-1"
+            >
+              <li>
+                <Link
+                  to="/profile"
+                  className="hover:bg-white/10 rounded-lg"
+                >
+                  Profile
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/connections"
+                  className="hover:bg-white/10 rounded-lg"
+                >
+                  Connections
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/requests"
+                  className="hover:bg-white/10 rounded-lg"
+                >
+                  Requests
+                </Link>
+              </li>
+
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="text-red-400 hover:bg-red-500/10 rounded-lg"
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      )}
     </div>
-  </div>)}
-</div>)
-}
+  );
+};
 
 export default NavBar;
