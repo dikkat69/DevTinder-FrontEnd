@@ -1,5 +1,5 @@
 import { useState } from "react";
-import UserCard from "./UserCard";
+import UserPreviewCard from "./UserPreviewCard";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
@@ -140,7 +140,7 @@ const EditProfile = ({ user }) => {
             {/* Save Button */}
             <button
               onClick={saveProfile}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold hover:scale-105 transition-all duration-300 shadow-md"
+              className="w-full py-3 rounded-xl bg-linear-to-r from-pink-500 to-purple-600 text-white font-semibold hover:scale-105 transition-all duration-300 shadow-md"
             >
               Save Profile 💾
             </button>
@@ -149,7 +149,7 @@ const EditProfile = ({ user }) => {
         </div>
 
         {/* ===== Live Card ===== */}
-        <UserCard
+        <UserPreviewCard
           user={{ firstName, lastName, photoUrl, age, gender, about }}
         />
 

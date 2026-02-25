@@ -27,22 +27,25 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  return (
-    <div className="flex justify-center py-16">
+return (
+  <div className="flex justify-center items-center min-h-[80vh] relative">
+    <div className="relative w-80 h-125">
       {feed && feed.length > 0 ? (
-        <UserCard user={feed[0]} />
+        feed.slice(0, 2).map((user, index) => (
+          <UserCard
+            key={user._id}
+            user={user}
+            isTop={index === 0}
+          />
+        ))
       ) : (
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl px-12 py-10 shadow-xl text-center">
-          <h2 className="text-xl font-semibold text-white mb-3">
-            No new profiles available
-          </h2>
-          <p className="text-gray-400">
-            Please check back later. New developers join daily 🚀
-          </p>
+        <div className="text-white text-xl">
+          No new profiles available 🚀
         </div>
       )}
     </div>
-  );
+  </div>
+);
 };
 
 export default Feed;
